@@ -33,7 +33,7 @@ int.on('line', input => {
 
 int.on('close', () => {
   for (const i of allEvents) {
-    console.log(`${(i.category + '           ').substring(0, 12)} ${((i.ms) + '           ').substring(0, 12)} ${
+    console.log(`${(i.category + '           ').substring(0, 12)} ${(i.ms + '           ').substring(0, 12)} ${
         (i.event + '                                      ').substring(0, 40)} ${i.endTimeInNumber}`);
   }
 });

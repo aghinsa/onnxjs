@@ -7,10 +7,10 @@ module.exports = (env, argv) => {
   const bundleMode = argv['bundle-mode'] || 'prod';  // 'prod'|'dev'|'perf'|undefined;
 
   const config = {
-    resolve: {extensions: ['.ts', '.js']},
+    resolve: { extensions: ['.ts', '.js'] },
     plugins: [new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/])],
-    module: {rules: [{test: /\.tsx?$/, loader: 'ts-loader'}]},
-    node: {fs: 'empty'}
+    module: { rules: [{ test: /\.tsx?$/, loader: 'ts-loader' }] },
+    node: { fs: 'empty' }
   };
 
   if (bundleMode === 'perf' || bundleMode === 'dev') {
@@ -20,11 +20,11 @@ module.exports = (env, argv) => {
   }
 
   if (bundleMode === 'perf') {
-    config.output = {path: path.resolve(__dirname, 'test'), filename: 'onnx.perf.js', libraryTarget: 'umd'};
+    config.output = { path: path.resolve(__dirname, 'test'), filename: 'onnx.perf.js', libraryTarget: 'umd' };
   } else if (bundleMode === 'dev') {
-    config.output = {path: path.resolve(__dirname, 'test'), filename: 'onnx.dev.js', libraryTarget: 'umd'};
+    config.output = { path: path.resolve(__dirname, 'test'), filename: 'onnx.dev.js', libraryTarget: 'umd' };
   } else {
-    config.output = {path: path.resolve(__dirname, 'dist'), filename: 'onnx.min.js', libraryTarget: 'umd'};
+    config.output = { path: path.resolve(__dirname, 'dist'), filename: 'onnx.min.js', libraryTarget: 'umd' };
   }
 
   if (bundleMode === 'prod') {

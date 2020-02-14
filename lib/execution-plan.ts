@@ -32,8 +32,8 @@ export class ExecutionPlan {
         let resolved = true;
         for (const input of op.node.inputs) {
           if (
-              !this._values[input]                                   // not an initialized input
-              && this.graph.getInputIndices().indexOf(input) === -1  // not model input
+              !this._values[input] &&                             // not an initialized input
+              this.graph.getInputIndices().indexOf(input) === -1  // not model input
           ) {
             resolved = false;
             break;
@@ -89,20 +89,22 @@ export class ExecutionPlan {
         }
 
         // run
+
         const inputTensors = inputList as Tensor[];
-        Logger.verbose(
-            'ExecPlan',
-            `Runing op:${thisOp.node.name} (${
-                inputTensors.map((t, i) => `'${thisOp.node.inputs[i]}': ${t.type}[${t.dims.join(',')}]`).join(', ')})`);
+        const operationInfo = `Runing op:${thisOp.node.name} (${
+            inputTensors.map((t, i) => `'${thisOp.node.inputs[i]}': ${t.type}[${t.dims.join(',')}]`).join(', ')})`;
+        Logger.verbose('ExecPlan', operationInfo);
 
         const outputList = await this.profiler.event('node', thisOp.node.name, async () => {
           const op = thisOp.op;
+          console.log('ExecPlan OP :', operationInfo);
           if (!op.checkInputs(inputTensors)) {
             throw new Error(`invalid inputs detected; op: ${thisOp.node.name}`);
           }
-
+          const start = new Date();
           const result = op.run(inferenceHandler, inputTensors);
-
+          const end = new Date();
+          console.log('<ExecPlan> Time Taken:', end.getTime() - start.getTime());
           return result;
         });
 

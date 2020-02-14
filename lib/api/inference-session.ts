@@ -94,6 +94,11 @@ export declare namespace InferenceSession {
      * specify the configuration of the profiler that used in an inference session
      */
     profiler?: Config.Profiler;
+
+    /**
+     * if 'granular' log runtime layer/op wise in console
+     */
+    log_layers?: string;
   }
 
   /**
