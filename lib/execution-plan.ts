@@ -97,7 +97,7 @@ export class ExecutionPlan {
 
         const outputList = await this.profiler.event('node', thisOp.node.name, async () => {
           const op = thisOp.op;
-          console.log('ExecPlan OP :', operationInfo);
+          console.log('<ExecPlan> Running OP :', operationInfo);
           if (!op.checkInputs(inputTensors)) {
             throw new Error(`invalid inputs detected; op: ${thisOp.node.name}`);
           }
